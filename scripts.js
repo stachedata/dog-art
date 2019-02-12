@@ -34,12 +34,10 @@ const displayArt = (image,title,culture,description) => {
     const container = document.getElementById('container')
     const artDiv = document.createElement('div')
     artDiv.className = "artDiv"
-    const artImage = document.createElement('div')
-    artImage.className = "artImage"
-    const artInfo = document.createElement('div')
-    artInfo.className = "artInfo"
-    artImage.innerHTML = '<img id=artImg src="' + image + '"/>'
-    artInfo.innerHTML = '<p>' + title + '<br>' + culture + '<br>' + description + '</p>'
-    container.appendChild(artDiv).appendChild(artImage).appendChild(artInfo)
+    const labelOverlay = document.createElement('div')
+    labelOverlay.className = "labelOverlay"
+    artDiv.innerHTML = '<img class=artImage src="' + image + '"/>'
+    labelOverlay.innerHTML = '<div class=artInfo>' + title + '<br>' + culture + '<br>' + description
+    container.appendChild(artDiv).appendChild(labelOverlay)
     return container
 }
