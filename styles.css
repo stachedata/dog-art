@@ -1,20 +1,38 @@
 .artDiv{
-    width: 375px;
+    position: relative;
+    text-align: center;
+    width: 450px;
+    height: auto;
     margin: 10px;
-    display: flex;
 }
 
 .artImage{
-    display: inline-block;
-    max-width: 100%;
-    height: auto;
-    position: relative;
+    width: 100%;
+    display: block;
 }
+
+.labelOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: whitesmoke;
+  }
+  
+  .artDiv:hover .labelOverlay {
+    opacity: 1;
+  }
 
 .artInfo{ 
     position: absolute;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: .75rem;
+    color: black;
 }
