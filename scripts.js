@@ -39,9 +39,14 @@ const displayArt = (image,title,culture,description) => {
     return container
 }
 
+const removeArt = () => {
+    let container = document.getElementById('container')
+    while (container.firstChild) container.removeChild(container.firstChild)
+}
+
 const randomizeArt = (a) =>{
+    removeArt() //first remove previous art on page
     //Fisher-Yates shuffle algorithm 
-    //location.reload(true)
     let j, x, i
     for (i = a.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1))
@@ -52,4 +57,8 @@ const randomizeArt = (a) =>{
     return a
 }
 
-document.getElementById('randomize').onclick = requestArt(url,true)
+//Button to randomize art
+document.getElementById('randomize').onclick = () => requestArt(url,true)
+
+//Populate art
+requestArt(url,false)
