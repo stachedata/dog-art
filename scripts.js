@@ -14,13 +14,13 @@ const requestArt = (url, randomize) => {
 const parseJson = (json, randomize) => {
     json.then(json => {
         let array = json.data
-        if (randomize == true) array = randomizeArt(array) //randomize data if trigger by randomize button
+        if (randomize == true) array = randomizeArt(array) //randomize data if triggered by randomize button
         for(let data of array){
             data = {
                 image: data.images.web.url,
                 title: data.title,
                 culture: data.culture[0],
-                description: data.wall_description
+                description: data.wall_description ? data.wall_description : '' //replace null description with empty string
             }
             displayArt(data.image,data.title,data.culture,data.description)
         }
