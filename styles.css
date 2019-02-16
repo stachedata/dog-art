@@ -41,7 +41,7 @@ header{
     width: 100%;
     opacity: 0;
     transition: .5s ease;
-    background-color: whitesmoke;
+    background-color: #fcfbf7;
   }
   
   .artDiv:hover .labelOverlay {
@@ -56,4 +56,10 @@ header{
     font-family: 'Cormorant Garamond', serif;
     font-weight: medium;
     text-align: left;
+}
+
+.artInfo::first-line{
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1.1rem;
 }
