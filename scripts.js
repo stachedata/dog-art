@@ -33,7 +33,7 @@ const displayArt = (image,title,culture,description) => {
     artDiv.className = "artDiv"
     const labelOverlay = document.createElement('div')
     labelOverlay.className = "labelOverlay"
-    artDiv.innerHTML = '<img class=artImage src="' + image + '"/>'
+    artDiv.innerHTML = '<img class=artImage src="' + image + '" alt="' + title + '"/>'
     labelOverlay.innerHTML = '<div class=artInfo>' + title + '<br>' + culture + '<br><br>' + description
     container.appendChild(artDiv).appendChild(labelOverlay)
     return container
