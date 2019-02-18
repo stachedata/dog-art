@@ -1,37 +1,47 @@
+//Variables
+const useApi = true   //set to false to use clean data instead of api data
+let json            //holds api data or clean data
 
-const url = 'https://cors-anywhere.herokuapp.com/https://openaccess-api.clevelandart.org/api/artworks/' +
-            '?q=dog&has_image=1&limit=10' //data query
+//Buttons
+document.getElementById('randomizeBtn').onclick = () => parseJson(json,true)                        //randomize art
+document.getElementById('infoBtn').onclick = () => document.getElementById('infoModal').showModal() //Open info modal
+document.getElementById('closeBtn').onclick = () => document.getElementById('infoModal').close()    //Close info modal
 
-//fetchs and returns json promise from api
-const requestArt = (url, randomize) => {
-    return fetch( url , {mode: 'cors', headers: {'Access-Control-Allow-Origin': 'https://openaccess-api.clevelandart.org'}})
-    .then(response => parseJson(response.json(), randomize))
-    .catch(error => console.log('fetch failed: ', error.message))  
-}
-
-//parse json to create an object instead of an array
-//sends object properties to container functions
-const parseJson = (json, randomize) => {
-    json.then(json => {
-        let array = json.data
-        if (randomize == true) array = randomizeArt(array) //randomize data if triggered by randomize button
-        for(let data of array){
-            data = {
-                image: data.images.web.url,
-                title: data.title,
-                culture: data.culture[0],
-                description: data.wall_description ? data.wall_description : '' //replace null description with empty string
-            }
-            displayArt(data.image,data.title,data.culture,data.description)
-        }
+if(useApi){
+    //fetchs and returns json from api
+    const url = 'https://cors-anywhere.herokuapp.com/https://openaccess-api.clevelandart.org/api/artworks/?q=dog&has_image=1&limit=10'
+    fetch( url , {mode: 'cors', headers: {'Access-Control-Allow-Origin': 'https://openaccess-api.clevelandart.org'}})
+    .then(resp => resp.json())
+    .then(respJson => {
+        json = respJson
+        parseJson(json,false)
     })
+    .catch(error => console.log('fetch failed: ', error.message))
+}else{
+    //json = cleanData
+    //parseJson(json,false)
+}
+   
+//parse json to an object and send to display art
+const parseJson = (json, randomize) => { 
+    let array = json.data
+    if (randomize == true) array = randomizeArt(array) //randomize data if triggered by randomize button
+    for(let data of array){
+        data = {
+            image: data.images.web.url,
+            title: data.title,
+            culture: data.culture[0],
+            description: data.wall_description ? data.wall_description : '' //replace null description with empty string
+        }
+        displayArt(data.image,data.title,data.culture,data.description)
+    }
 }
 
 const displayArt = (image,title,culture,description) => {
     const container = document.getElementById('container')
     const artDiv = document.createElement('div')
-    artDiv.className = "artDiv"
     const labelOverlay = document.createElement('div')
+    artDiv.className = "artDiv"
     labelOverlay.className = "labelOverlay"
     artDiv.innerHTML = '<img class=artImage src="' + image + '" alt="' + title + '"/>'
     labelOverlay.innerHTML = '<div class=artInfo>' + title + '<br>' + culture + '<br><br>' + description
@@ -45,7 +55,7 @@ const removeArt = () => {
 }
 
 const randomizeArt = (a) =>{
-    removeArt() //first remove previous art on page
+    removeArt() //first, remove previous art on page
     //Fisher-Yates shuffle algorithm 
     let j, x, i
     for (i = a.length - 1; i > 0; i--) {
@@ -56,9 +66,3 @@ const randomizeArt = (a) =>{
     }
     return a
 }
-
-//Button to randomize art
-document.getElementById('randomize').onclick = () => requestArt(url,true)
-
-//Populate art
-requestArt(url,false)
