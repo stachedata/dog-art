@@ -3,9 +3,13 @@ const useApi = true   //set to false to use clean data instead of api data
 let json            //holds api data or clean data
 
 //Buttons
-document.getElementById('randomizeBtn').onclick = () => parseJson(json,true)                        //randomize art
 document.getElementById('infoBtn').onclick = () => document.getElementById('infoModal').showModal() //Open info modal
 document.getElementById('closeBtn').onclick = () => document.getElementById('infoModal').close()    //Close info modal
+document.getElementById('title').onclick = () => window.scrollTo(0,0) //scroll to top of page
+document.getElementById('randomizeBtn').onclick = () => {
+    parseJson(json,true) //randomize art
+    window.scrollTo(0,0) //scroll to top of page
+}                      
 
 if(useApi){
     //fetchs and returns json from api
