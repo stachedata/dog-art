@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond:500,600');
+@import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond:500,600,700');
 
 body{
     background-image: url(images/white_wall.png); /* Background pattern from Toptal Subtle Patterns */
@@ -17,6 +17,12 @@ header{
     width: 100%;
     top: 0;
     z-index: 1;
+}
+
+#title{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: bolder;
+    font-size: 23px;
 }
 
 #icons{
