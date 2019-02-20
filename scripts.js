@@ -1,26 +1,31 @@
-//Variables
-const useApi = true   //set to false to use clean data instead of api data
-let json            //holds api data or clean data
+
+const useApi = true     //set to false to use clean data instead of api data
+let json                //holds api data or clean data
+const loader = document.getElementById('loader') //loader displays while images loads
 
 //Buttons
 document.getElementById('infoBtn').onclick = () => document.getElementById('infoModal').showModal() //Open info modal
 document.getElementById('closeBtn').onclick = () => document.getElementById('infoModal').close()    //Close info modal
 document.getElementById('title').onclick = () => window.scrollTo(0,0) //scroll to top of page
 document.getElementById('randomizeBtn').onclick = () => {
+    loader.style.display = 'block'
     parseJson(json,true) //randomize art
     window.scrollTo(0,0) //scroll to top of page
 }                      
 
 if(useApi){
     //fetchs and returns json from api
-    const url = 'https://cors-anywhere.herokuapp.com/https://openaccess-api.clevelandart.org/api/artworks/?q=dog&has_image=1&limit=10'
+    const url = 'https://cors-anywhere.herokuapp.com/https://openaccess-api.clevelandart.org/api/artworks/?q=dog&has_image=1&limit=250'
     fetch( url , {mode: 'cors', headers: {'Access-Control-Allow-Origin': 'https://openaccess-api.clevelandart.org'}})
     .then(resp => resp.json())
     .then(respJson => {
         json = respJson
         parseJson(json,false)
     })
-    .catch(error => console.log('fetch failed: ', error.message))
+    .catch(error => {
+        window.alert('Server Error')
+        console.log('fetch failed: ', error.message)
+    })
 }else{
     //json = cleanData
     //parseJson(json,false)
@@ -50,6 +55,7 @@ const displayArt = (image,title,culture,description) => {
     artDiv.innerHTML = '<img class=artImage src="' + image + '" alt="' + title + '"/>'
     labelOverlay.innerHTML = '<div class=artInfo>' + title + '<br>' + culture + '<br><br>' + description
     container.appendChild(artDiv).appendChild(labelOverlay)
+    loader.style.display = 'none'
     return container
 }
 
