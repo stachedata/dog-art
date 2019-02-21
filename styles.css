@@ -53,8 +53,8 @@ header{
 
 #closeBtn{
     position: absolute;
-    top: 5;
-    right: 5;
+    top: 5px;
+    right: 5px;
 }
 
 #container{
