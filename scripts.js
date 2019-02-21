@@ -1,7 +1,5 @@
-
-const useApi = true     //set to false to use clean data instead of api data
-let json                //holds api data or clean data
-const loader = document.getElementById('loader') //loader displays while images loads
+const loader = document.getElementById('loader') //loader displays while images load
+let json //to hold json data in global scope
 
 //Buttons
 document.getElementById('infoBtn').onclick = () => document.getElementById('infoModal').showModal() //Open info modal
@@ -13,23 +11,15 @@ document.getElementById('randomizeBtn').onclick = () => {
     window.scrollTo(0,0) //scroll to top of page
 }                      
 
-if(useApi){
-    //fetchs and returns json from api
-    const url = 'https://cors-anywhere.herokuapp.com/https://openaccess-api.clevelandart.org/api/artworks/?q=dog&has_image=1&limit=250'
-    fetch( url , {mode: 'cors', headers: {'Access-Control-Allow-Origin': 'https://openaccess-api.clevelandart.org'}})
-    .then(resp => resp.json())
-    .then(respJson => {
-        json = respJson
-        parseJson(json,false)
-    })
-    .catch(error => {
-        window.alert('Server Error')
-        console.log('fetch failed: ', error.message)
-    })
-}else{
-    //json = cleanData
-    //parseJson(json,false)
-}
+//fetchs and returns json from api
+const url = 'https://cors-anywhere.herokuapp.com/https://openaccess-api.clevelandart.org/api/artworks/?q=dog&has_image=1&limit=250'
+fetch( url , {mode: 'cors', headers: {'Access-Control-Allow-Origin': 'https://openaccess-api.clevelandart.org'}})
+.then(resp => resp.json())
+.then(respJson => {
+    json = respJson
+    parseJson(json,false)
+})
+.catch(error => window.alert('Error: ' + error.message))
    
 //parse json to an object and send to display art
 const parseJson = (json, randomize) => { 
@@ -64,7 +54,7 @@ const removeArt = () => {
     while (container.firstChild) container.removeChild(container.firstChild)
 }
 
-const randomizeArt = (a) =>{
+const randomizeArt = (a) => {
     removeArt() //first, remove previous art on page
     //Fisher-Yates shuffle algorithm 
     let j, x, i
