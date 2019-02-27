@@ -2,8 +2,8 @@ const loader = document.getElementById('loader') //loader displays while images 
 let json //to hold json data in global scope
 
 //Buttons
-document.getElementById('infoBtn').onclick = () => document.getElementById('infoModal').showModal() //Open info modal
-document.getElementById('closeBtn').onclick = () => document.getElementById('infoModal').close()    //Close info modal
+document.getElementById('infoBtn').onclick = () => document.getElementById('infoModal').style.display = 'inline-block' //Open info modal
+document.getElementById('closeBtn').onclick = () => document.getElementById('infoModal').style.display = 'none'    //Close info modal
 document.getElementById('title').onclick = () => window.scrollTo(0,0) //scroll to top of page
 document.getElementById('randomizeBtn').onclick = () => {
     loader.style.display = 'block'

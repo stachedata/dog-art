@@ -43,12 +43,18 @@ header{
 }
 
 #infoModal{
+    display: none;
     position: fixed;
-    border: none;
+    z-index: 1001;
+    left: 0; 
+    right: 0;
     height: auto;
     padding: 30px;
     line-height: 40px;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
 }
 
 #closeBtn{
