@@ -19,7 +19,7 @@ fetch( url , {mode: 'cors', headers: {'Access-Control-Allow-Origin': 'https://op
     json = respJson
     parseJson(json,false)
 })
-.catch(error => window.alert('Error: ' + error.message))
+.catch(error => console.log('Error: ' + error.message))
    
 //parse json to an object and send to display art
 const parseJson = (json, randomize) => { 
@@ -35,6 +35,8 @@ const parseJson = (json, randomize) => {
         displayArt(data.image,data.title,data.culture,data.description)
     }
 }
+ 
+
 
 const displayArt = (image,title,culture,description) => {
     const container = document.getElementById('container')
@@ -42,9 +44,13 @@ const displayArt = (image,title,culture,description) => {
     const labelOverlay = document.createElement('div')
     artDiv.className = "artDiv"
     labelOverlay.className = "labelOverlay"
-    artDiv.innerHTML = '<img class=artImage src="' + image + '" alt="' + title + '"/>'
+    artDiv.innerHTML = '<img class=artImage src="./images/placeholder.jpeg" data-src="' + image + '" alt="' + title + '"/>'
     labelOverlay.innerHTML = '<div class=artInfo>' + title + '<br>' + culture + '<br><br>' + description
     container.appendChild(artDiv).appendChild(labelOverlay)
+    //lazy load images
+    Array.from(container.querySelectorAll('img')).forEach(img => {
+        observer.observe(img)
+    })
     loader.style.display = 'none'
     return container
 }
@@ -54,11 +60,11 @@ const removeArt = () => {
     while (container.firstChild) container.removeChild(container.firstChild)
 }
 
+//Fisher-Yates shuffle algorithm 
 const randomizeArt = (a) => {
     removeArt() //first, remove previous art on page
-    //Fisher-Yates shuffle algorithm 
     let j, x, i
-    for (i = a.length - 1; i > 0; i--) {
+    for (i = a.length - 1; i > 0; i--) { 
         j = Math.floor(Math.random() * (i + 1))
         x = a[i]
         a[i] = a[j]
@@ -66,3 +72,14 @@ const randomizeArt = (a) => {
     }
     return a
 }
+
+//observer for lazy loading
+const observer = new IntersectionObserver((images, observer) => {
+    for(let image of images){
+        if (image.intersectionRatio > 0){
+            console.log("loaded")
+          image.target.src = image.target.dataset.src
+          observer.unobserve(image.target)
+        }
+    }  
+})
