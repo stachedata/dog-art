@@ -2,8 +2,8 @@ const loader = document.getElementById('loader') //loader displays while images 
 let json //to hold json data in global scope
 
 //Buttons
-document.getElementById('infoBtn').onclick = () => document.getElementById('infoModal').style.display = 'inline-block' //Open info modal
-document.getElementById('closeBtn').onclick = () => document.getElementById('infoModal').style.display = 'none'    //Close info modal
+document.getElementById('infoBtn').onclick = () => document.getElementById('infoPage').style.display = 'inline-block'   //Open info page
+document.getElementById('closeBtn').onclick = () => document.getElementById('infoPage').style.display = 'none'          //Close info page
 document.getElementById('title').onclick = () => window.scrollTo(0,0) //scroll to top of page
 document.getElementById('randomizeBtn').onclick = () => {
     loader.style.display = 'block'
@@ -35,8 +35,6 @@ const parseJson = (json, randomize) => {
         displayArt(data.image,data.title,data.culture,data.description)
     }
 }
- 
-
 
 const displayArt = (image,title,culture,description) => {
     const container = document.getElementById('container')
@@ -77,7 +75,6 @@ const randomizeArt = (a) => {
 const observer = new IntersectionObserver((images, observer) => {
     for(let image of images){
         if (image.intersectionRatio > 0){
-            console.log("loaded")
           image.target.src = image.target.dataset.src
           observer.unobserve(image.target)
         }
