@@ -1,4 +1,4 @@
-# Dog Art
+# Dog Art - A Photo Library
 
 The Cleveland Museum of Art released an API that opens their art data to the public.  
 Upon discovering this, I wanted to create a photo library of all pieces of art that included dogs.  
@@ -8,5 +8,3 @@ The API is a work in progress. For more information on this API:
 http://openaccess-api.clevelandart.org/  
 http://www.clevelandart.org/open-access  
 https://www.clevelandart.org/terms-and-conditions  
-
-**The information button to open the information modal is currently only supported by Chrome and Edge 
